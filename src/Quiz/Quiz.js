@@ -8,6 +8,8 @@ export default function Quiz() {
       <Question />
       <Question />
       <Question />
+      <Question />
+      <Question />
     </main>
   );
 }

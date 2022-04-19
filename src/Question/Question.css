@@ -1,0 +1,36 @@
+.container {
+  /* border: 2px dotted blue; */
+  width: 50%;
+  height: 100px;
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.question {
+  font-size: 16px;
+}
+
+.answers {
+  display: flex;
+  justify-content: space-between;
+  width: 65%;
+  /* border: 2px solid red; */
+}
+
+.answers--button {
+  background-color: #ede6db;
+  border: 1px solid #293264;
+  color: #293264;
+  width: 100px;
+  height: 25px;
+  font-size: 11px;
+  /* margin: 20px 0; */
+}
+
+.answers--button:focus {
+  background-color: #d6dbf5;
+  border: none;
+}
