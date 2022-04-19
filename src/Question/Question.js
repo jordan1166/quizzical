@@ -1,12 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Question.css";
 import Button from "../Button/Button";
 import { nanoid } from "nanoid";
 
 export default function Question(props) {
   const [buttons, setButtons] = useState(createButtons());
+  // keeps track of the currently selected button by storing it's ID
+  const [currentID, setCurrentID] = useState(0);
+  useEffect(() => {
+    // when the current id changes (when new button is clicked),
+    // re-render the 4 buttons so that only the selected button is highlighted
+    // the 'isClicked' property is 'false' for all unselected buttons
+    setButtons((prevState) =>
+      prevState.map((button) => {
+        return button.id !== currentID
+          ? { ...button, isClicked: false }
+          : button;
+      })
+    );
+  }, [currentID]);
+
   function answerButtonClicked(id) {
-    console.log(id);
+    // when button is clicked set current id equal to the button's id
+    setCurrentID(id);
     setButtons((prevState) =>
       prevState.map((button) => {
         // if id's match, create new object with old data and update isClicked property
@@ -40,6 +56,7 @@ export default function Question(props) {
     <main className="container">
       <h1 className="question">How would one say goodbye in Spanish?</h1>
       <section className="answers">
+        {/* each Question component renders it's own set of 4 buttons */}
         {buttons.map((button) => (
           <Button
             key={button.id}
