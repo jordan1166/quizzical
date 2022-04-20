@@ -19,6 +19,7 @@ export default function Quiz(props) {
       "https://opentdb.com/api.php?amount=5&type=multiple"
     );
     const data = await response.json();
+    console.log(data);
     // after questions are received, load questions into state, re-render Quiz component
     setQuestions(data);
   }
@@ -33,11 +34,14 @@ export default function Quiz(props) {
     <main className="questions-container">
       {/* create five question components and give each question component one question from the five questions retrieved from the API */}
       {/* If questions are finished being fetched from API, pass questions as props to Question components. */}
+      {/* If questionData array length is 0, then getQuestions() has not finished fetching the data so 'Loading..' should be passed as a prop */}
       {questionArray.map((question, index) => (
         <Question
           question={
             question.questionData.length !== 0
               ? question.questionData.results[index].question
+                  .replace(/&quot;/g, '"')
+                  .replace(/&#039;/g, "'")
               : "Loading.."
           }
           key={question.id}
