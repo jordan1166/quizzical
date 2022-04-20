@@ -5,10 +5,9 @@ import { nanoid } from "nanoid";
 
 export default function Question(props) {
   const [buttons, setButtons] = useState(createButtons());
-  const [question, setQuestion] = useState(props.question);
   // keeps track of the currently selected button by storing it's ID
   const [currentID, setCurrentID] = useState(0);
-  console.log(question);
+  console.log(props.question);
   useEffect(() => {
     // when the current id changes (when new button is clicked),
     // re-render the 4 buttons so that only the selected button is highlighted
@@ -20,8 +19,7 @@ export default function Question(props) {
           : button;
       })
     );
-    setQuestion(question);
-  }, [currentID, question]);
+  }, [currentID]);
 
   function answerButtonClicked(id) {
     // when button is clicked set current id equal to the button's id
@@ -57,7 +55,7 @@ export default function Question(props) {
   };
   return (
     <main className="container">
-      <h1 className="question">{question}</h1>
+      <h1 className="question">{props.question}</h1>
       <section className="answers">
         {/* each Question component renders it's own set of 4 buttons */}
         {buttons.map((button) => (

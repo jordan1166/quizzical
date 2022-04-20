@@ -38,7 +38,7 @@ export default function Quiz(props) {
           question={
             question.questionData.length !== 0
               ? question.questionData.results[index].question
-              : "Loading"
+              : "Loading.."
           }
           key={question.id}
         />
