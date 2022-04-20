@@ -1,5 +1,12 @@
-.check-anwser-container {
+.main-container {
+  /* border: 2px solid blue; */
   width: 50%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.check-anwser-container {
+  width: 100%;
   display: flex;
   justify-content: space-around;
 }
