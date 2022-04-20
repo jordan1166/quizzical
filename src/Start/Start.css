@@ -33,7 +33,7 @@ button {
   cursor: pointer;
 }
 
-main {
+.start-container {
   display: flex;
   flex-direction: column;
   justify-content: center;

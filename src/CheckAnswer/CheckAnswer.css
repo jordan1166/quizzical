@@ -1,0 +1,15 @@
+.check-anwser-container {
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.check-answer-button {
+  width: 150px;
+  height: 40px;
+  margin-top: 10px;
+}
+
+.correct-answer-count {
+  font-weight: bold;
+}
