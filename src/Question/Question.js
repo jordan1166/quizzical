@@ -7,8 +7,6 @@ export default function Question(props) {
   const [buttons, setButtons] = useState(createButtons());
   // keeps track of the currently selected button by storing it's ID
   const [currentID, setCurrentID] = useState(0);
-  console.log(props.question);
-  console.log(props.answers);
 
   useEffect(() => {
     // when the current id changes (when new button is clicked),
@@ -22,14 +20,7 @@ export default function Question(props) {
       })
     );
   }, [currentID]);
-  // shuffle answer array
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
+
   function answerButtonClicked(id) {
     // when button is clicked set current id equal to the button's id
     setCurrentID(id);

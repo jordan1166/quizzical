@@ -19,16 +19,30 @@ export default function Quiz(props) {
       "https://opentdb.com/api.php?amount=5&type=multiple"
     );
     const data = await response.json();
-    console.log(data);
-    console.log(data.results[0].incorrect_answers);
-    console.log([
-      ...data.results[0].incorrect_answers,
-      data.results[0].correct_answer,
-    ]);
+    const results = data.results;
+    // store each question and its answers in local storage
+    // shuffle the answers using the shuffle array
+    // questions and answers are stored in local storage so the answers don't get
+    // reshuffled when the 'check answer' button is clicked
+    results.forEach((result, index) => {
+      localStorage.setItem(
+        `result ${index}`,
+        JSON.stringify(
+          shuffleArray([...result.incorrect_answers, result.correct_answer])
+        )
+      );
+    });
     // after questions are received, load questions into state, re-render Quiz component
     setQuestions(data);
   }
-
+  // shuffle answer array
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
   // create array with 5 question objects
   const questionArray = Array(5)
     .fill()
@@ -36,10 +50,6 @@ export default function Quiz(props) {
       questionData: questions,
       id: nanoid(),
     }));
-  function randomNumber() {
-    return Math.floor(Math.random() * 5);
-  }
-  console.log("hi: " + randomNumber());
   return (
     <main className="questions-container">
       {/* create five question components and give each question component one question from the five questions retrieved from the API */}
@@ -58,12 +68,9 @@ export default function Quiz(props) {
               : "Loading.."
           }
           answers={
-            question.questionData.length !== 0
-              ? [
-                  ...question.questionData.results[index].incorrect_answers,
-                  question.questionData.results[index].correct_answer,
-                ]
-              : ["Loading..", "Loading..", "Loading..", "Loading.."]
+            JSON.parse(localStorage.getItem(`result ${index}`)).length !== 0
+              ? JSON.parse(localStorage.getItem(`result ${index}`))
+              : Array(4).fill("Loading..")
           }
           key={question.id}
         />
