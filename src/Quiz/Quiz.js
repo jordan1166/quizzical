@@ -60,11 +60,6 @@ export default function Quiz(props) {
           question={
             question.questionData.length !== 0
               ? question.questionData.results[index].question
-                  .replace(/&quot;/g, '"')
-                  .replace(/&#039;/g, "'")
-                  .replace(/&amp;/g, "&")
-                  .replace(/&divide;/g, "/")
-                  .replace(/&eacute;/g, "e")
               : "Loading.."
           }
           answers={

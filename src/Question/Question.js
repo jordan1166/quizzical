@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./Question.css";
 import Button from "../Button/Button";
 import { nanoid } from "nanoid";
@@ -40,12 +40,7 @@ export default function Question(props) {
     const buttonArray = Array(4)
       .fill()
       .map((button, index) => ({
-        text: props.answers[index]
-          .replace(/&quot;/g, '"')
-          .replace(/&#039;/g, "'")
-          .replace(/&amp;/g, "&")
-          .replace(/&divide;/g, "/")
-          .replace(/&eacute;/g, "e"),
+        text: props.answers[index],
         isClicked: false,
         id: nanoid(),
       }));
@@ -58,9 +53,15 @@ export default function Question(props) {
     width: "100%",
     opacity: "0.2",
   };
+
   return (
     <main className="container">
-      <h1 className="question">{props.question}</h1>
+      {/* dangerouslySetInnerHTML is used to render html entities
+       in the displayed string/question */}
+      <h1
+        className="question"
+        dangerouslySetInnerHTML={{ __html: props.question }}
+      ></h1>
       <section className="answers">
         {/* each Question component renders it's own set of 4 buttons */}
         {buttons.map((button) => (

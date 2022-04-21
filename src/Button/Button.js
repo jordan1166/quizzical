@@ -6,14 +6,14 @@ export default function Button(props) {
   const styles = props.isClicked
     ? { backgroundColor: "#d6dbf5", border: "none" }
     : { backgroundColor: "#ede6db", border: "1px solid #293264" };
-
+  /* dangerouslySetInnerHTML is used to render html entities
+       in the displayed button text */
   return (
     <button
       className="answers--button"
       onClick={props.answerButtonClicked}
       style={styles}
-    >
-      {props.text}
-    </button>
+      dangerouslySetInnerHTML={{ __html: props.text }}
+    ></button>
   );
 }
