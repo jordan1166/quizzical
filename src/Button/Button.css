@@ -1,6 +1,8 @@
 .answers--button {
   color: #293264;
+  padding: 0 10px;
   width: 100px;
-  height: 25px;
+  min-height: 25px;
   font-size: 11px;
+  margin-right: 20px;
 }

@@ -20,8 +20,21 @@ export default function Quiz(props) {
     );
     const data = await response.json();
     console.log(data);
+    console.log(data.results[0].incorrect_answers);
+    console.log([
+      ...data.results[0].incorrect_answers,
+      data.results[0].correct_answer,
+    ]);
     // after questions are received, load questions into state, re-render Quiz component
     setQuestions(data);
+  }
+  // shuffle answer array
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
   // create array with 5 question objects
   const questionArray = Array(5)
@@ -42,6 +55,14 @@ export default function Quiz(props) {
               ? question.questionData.results[index].question
                   .replace(/&quot;/g, '"')
                   .replace(/&#039;/g, "'")
+              : "Loading.."
+          }
+          answer={
+            question.questionData.length !== 0
+              ? shuffleArray([
+                  ...question.questionData.results[index].incorrect_answers,
+                  question.questionData.results[index].correct_answer,
+                ])
               : "Loading.."
           }
           key={question.id}

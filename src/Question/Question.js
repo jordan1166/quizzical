@@ -8,6 +8,7 @@ export default function Question(props) {
   // keeps track of the currently selected button by storing it's ID
   const [currentID, setCurrentID] = useState(0);
   console.log(props.question);
+  console.log(props.answer);
   useEffect(() => {
     // when the current id changes (when new button is clicked),
     // re-render the 4 buttons so that only the selected button is highlighted
@@ -39,8 +40,8 @@ export default function Question(props) {
     // these properties will be used to generate Button Components
     const buttonArray = Array(4)
       .fill()
-      .map(() => ({
-        text: "Hello",
+      .map((button, index) => ({
+        text: props.answer[index],
         isClicked: false,
         id: nanoid(),
       }));
