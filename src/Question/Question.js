@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Question.css";
 import Button from "../Button/Button";
 import { nanoid } from "nanoid";
@@ -8,7 +8,8 @@ export default function Question(props) {
   // keeps track of the currently selected button by storing it's ID
   const [currentID, setCurrentID] = useState(0);
   console.log(props.question);
-  console.log(props.answer);
+  console.log(props.answers);
+
   useEffect(() => {
     // when the current id changes (when new button is clicked),
     // re-render the 4 buttons so that only the selected button is highlighted
@@ -21,7 +22,14 @@ export default function Question(props) {
       })
     );
   }, [currentID]);
-
+  // shuffle answer array
+  function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
   function answerButtonClicked(id) {
     // when button is clicked set current id equal to the button's id
     setCurrentID(id);
@@ -41,7 +49,12 @@ export default function Question(props) {
     const buttonArray = Array(4)
       .fill()
       .map((button, index) => ({
-        text: props.answer[index],
+        text: props.answers[index]
+          .replace(/&quot;/g, '"')
+          .replace(/&#039;/g, "'")
+          .replace(/&amp;/g, "&")
+          .replace(/&divide;/g, "/")
+          .replace(/&eacute;/g, "e"),
         isClicked: false,
         id: nanoid(),
       }));

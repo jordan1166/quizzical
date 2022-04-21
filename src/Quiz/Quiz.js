@@ -28,14 +28,7 @@ export default function Quiz(props) {
     // after questions are received, load questions into state, re-render Quiz component
     setQuestions(data);
   }
-  // shuffle answer array
-  function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  }
+
   // create array with 5 question objects
   const questionArray = Array(5)
     .fill()
@@ -43,6 +36,10 @@ export default function Quiz(props) {
       questionData: questions,
       id: nanoid(),
     }));
+  function randomNumber() {
+    return Math.floor(Math.random() * 5);
+  }
+  console.log("hi: " + randomNumber());
   return (
     <main className="questions-container">
       {/* create five question components and give each question component one question from the five questions retrieved from the API */}
@@ -55,15 +52,18 @@ export default function Quiz(props) {
               ? question.questionData.results[index].question
                   .replace(/&quot;/g, '"')
                   .replace(/&#039;/g, "'")
+                  .replace(/&amp;/g, "&")
+                  .replace(/&divide;/g, "/")
+                  .replace(/&eacute;/g, "e")
               : "Loading.."
           }
-          answer={
+          answers={
             question.questionData.length !== 0
-              ? shuffleArray([
+              ? [
                   ...question.questionData.results[index].incorrect_answers,
                   question.questionData.results[index].correct_answer,
-                ])
-              : "Loading.."
+                ]
+              : ["Loading..", "Loading..", "Loading..", "Loading.."]
           }
           key={question.id}
         />
