@@ -24,6 +24,6 @@ export default function CheckAnswer(props) {
       </div>
     );
   }
-  const renderResults = props.buttonClicked ? clicked() : notClicked();
+  const renderResults = props.checkAnswerButtonClicked ? clicked() : notClicked();
   return <main className="main-container">{renderResults}</main>;
 }

@@ -5,11 +5,25 @@ import CheckAnswer from "../CheckAnswer/CheckAnswer";
 import { nanoid } from "nanoid";
 
 export default function Quiz(props) {
-  const [buttonClicked, setButtonClicked] = useState(false);
+  const [answers, setAnswers] = useState([]);
+  const [checkAnswerButtonClicked, setCheckAnswerButtonClicked] =
+    useState(false);
   const [questions, setQuestions] = useState([]);
+  console.log(answers);
   function handleClick() {
-    setButtonClicked((prevState) => !prevState);
+    setCheckAnswerButtonClicked((prevState) => !prevState);
   }
+  // when 'check answer' button is clicked, get selected answers
+  // from local storage, store them in an array,
+  // initialize array of selected answers as the new 'answers' state by passing
+  // the array to setAnswer
+  useEffect(() => {
+    setAnswers(
+      Array(5)
+        .fill()
+        .map((item, index) => localStorage.getItem(`answer ${index}`))
+    );
+  }, [checkAnswerButtonClicked]);
   useEffect(() => {
     getQuestions();
   }, []);
@@ -67,10 +81,21 @@ export default function Quiz(props) {
               ? JSON.parse(localStorage.getItem(`result ${index}`))
               : Array(4).fill("Loading..")
           }
+          correctAnswer={
+            question.questionData.length !== 0
+              ? question.questionData.results[index].correct_answer
+              : "Loading.."
+          }
+          selectedAnswer={answers.length !== 0 ? answers[index] : ""}
           key={question.id}
+          questionNumber={index}
+          checkAnswerButtonClicked={checkAnswerButtonClicked}
         />
       ))}
-      <CheckAnswer buttonClicked={buttonClicked} handleClick={handleClick} />
+      <CheckAnswer
+        checkAnswerButtonClicked={checkAnswerButtonClicked}
+        handleClick={handleClick}
+      />
     </main>
   );
 }

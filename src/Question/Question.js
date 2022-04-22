@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Question.css";
 import Button from "../Button/Button";
 import { nanoid } from "nanoid";
@@ -7,7 +7,8 @@ export default function Question(props) {
   const [buttons, setButtons] = useState(createButtons());
   // keeps track of the currently selected button by storing it's ID
   const [currentID, setCurrentID] = useState(0);
-
+  const [selectedCorrectAnswer, setSelectedCorrectAnswer] = useState(false);
+  console.log(props.correctAnswer);
   useEffect(() => {
     // when the current id changes (when new button is clicked),
     // re-render the 4 buttons so that only the selected button is highlighted
@@ -21,12 +22,22 @@ export default function Question(props) {
     );
   }, [currentID]);
 
-  function answerButtonClicked(id) {
+  function answerButtonClicked(id, text) {
     // when button is clicked set current id equal to the button's id
     setCurrentID(id);
+    console.log(text);
+    // when answer is selected, save answer to local storage
+    localStorage.setItem(`answer ${props.questionNumber}`, text);
+    setSelectedCorrectAnswer((prevState) => {
+      return text === props.correctAnswer ? true : false;
+    });
     setButtons((prevState) =>
       prevState.map((button) => {
+        // map through array of button objects
         // if id's match, create new object with old data and update isClicked property
+        // this basically re-renders the button components when a new button is clicked
+        // the newly clicked button is highlighted while the unclicked buttons
+        // are not highlighted
         return button.id === id
           ? { ...button, isClicked: !button.isClicked }
           : button;
@@ -68,8 +79,13 @@ export default function Question(props) {
           <Button
             key={button.id}
             text={button.text}
+            selected={props.selectedAnswer}
             isClicked={button.isClicked}
-            answerButtonClicked={() => answerButtonClicked(button.id)}
+            answerButtonClicked={() =>
+              answerButtonClicked(button.id, button.text)
+            }
+            selectedCorrectAnswer={selectedCorrectAnswer}
+            checkAnswerButtonClicked={props.checkAnswerButtonClicked}
           />
         ))}
       </section>
