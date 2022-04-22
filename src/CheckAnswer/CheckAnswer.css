@@ -20,3 +20,7 @@
 .correct-answer-count {
   font-weight: bold;
 }
+
+.change-margin {
+  margin-bottom: 30px;
+}

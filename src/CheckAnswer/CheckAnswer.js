@@ -21,7 +21,10 @@ export default function CheckAnswer(props) {
   function notClicked() {
     return (
       <div className="check-anwser-container">
-        <button className="check-answer-button" onClick={props.handleClick}>
+        <button
+          className="check-answer-button change-margin"
+          onClick={props.handleClick}
+        >
           Check Answer
         </button>
       </div>
