@@ -8,7 +8,6 @@ export default function Question(props) {
   // keeps track of the currently selected button by storing it's ID
   const [currentID, setCurrentID] = useState(0);
   const [selectedCorrectAnswer, setSelectedCorrectAnswer] = useState(false);
-  console.log(props.correctAnswer);
   useEffect(() => {
     // when the current id changes (when new button is clicked),
     // re-render the 4 buttons so that only the selected button is highlighted
@@ -40,12 +39,10 @@ export default function Question(props) {
         });
       }
     }
-    console.log(props.correctSelectedAnswers);
   }
   function answerButtonClicked(id, text) {
     // when button is clicked set current id equal to the button's id
     setCurrentID(id);
-    console.log(text);
     correctAnswerCount(text);
     // check if an answer to current question is in the selectedAnswers object
     if (props.questionNumber in props.selectedAnswers) {
@@ -74,7 +71,6 @@ export default function Question(props) {
         return prevState;
       });
     }
-    console.log(props.selectedAnswers);
     // when answer is selected, save answer to local storage
     localStorage.setItem(`answer ${props.questionNumber}`, text);
     setSelectedCorrectAnswer((prevState) => {

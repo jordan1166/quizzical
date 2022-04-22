@@ -4,10 +4,6 @@ import "./Button.css";
 export default function Button(props) {
   let styles;
 
-  if (props.selectedCorrectAnswer) {
-    console.log("Correct!");
-  }
-
   if (props.checkAnswerButtonClicked) {
     // when 'check answer' button is clicked highlight correct answers in green
     if (props.correctAnswer === props.text) {

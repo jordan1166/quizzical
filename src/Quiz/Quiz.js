@@ -13,9 +13,12 @@ export default function Quiz(props) {
   const [checkAnswerButtonClicked, setCheckAnswerButtonClicked] =
     useState(false);
   const [questions, setQuestions] = useState([]);
-  console.log(answers);
   function handleClick() {
     setCheckAnswerButtonClicked((prevState) => !prevState);
+    // restart quiz with new questions
+    if (checkAnswerButtonClicked) {
+      getQuestions();
+    }
   }
   // when 'check answer' button is clicked, get selected answers
   // from local storage, store them in an array,
