@@ -26,6 +26,34 @@ export default function Question(props) {
     // when button is clicked set current id equal to the button's id
     setCurrentID(id);
     console.log(text);
+    // check if an answer to current question is in the selectedAnswers object
+    if (props.questionNumber in props.selectedAnswers) {
+      // if currently selected answer is already a value in the selectedAnswers object
+      // that means we are clicking the answer again to deselect it
+      // so delete the entire question from the object
+      if (props.selectedAnswers[props.questionNumber] === text) {
+        props.setSelectedAnswers((prevState) => {
+          delete prevState[props.questionNumber];
+          return prevState;
+        });
+      } else {
+        // if currently selected answer is not already a value in the selectedAnswers object
+        // that means we are just choosing a different answer for the same question
+        // so set the currently selected answer as the value to the current question
+        props.setSelectedAnswers((prevState) => {
+          prevState[props.questionNumber] = text;
+          return prevState;
+        });
+      }
+    } else {
+      // if an answer to the current question is not in the selectedAnswers object
+      // add the key:value pair (questionNumber:text) to the object
+      props.setSelectedAnswers((prevState) => {
+        prevState[props.questionNumber] = text;
+        return prevState;
+      });
+    }
+    console.log(props.selectedAnswers);
     // when answer is selected, save answer to local storage
     localStorage.setItem(`answer ${props.questionNumber}`, text);
     setSelectedCorrectAnswer((prevState) => {

@@ -5,6 +5,8 @@ import CheckAnswer from "../CheckAnswer/CheckAnswer";
 import { nanoid } from "nanoid";
 
 export default function Quiz(props) {
+  // selectedAnswers keeps track of which answers are currently selected
+  const [selectedAnswers, setSelectedAnswers] = useState({});
   const [answers, setAnswers] = useState([]);
   const [checkAnswerButtonClicked, setCheckAnswerButtonClicked] =
     useState(false);
@@ -90,6 +92,8 @@ export default function Quiz(props) {
           key={question.id}
           questionNumber={index}
           checkAnswerButtonClicked={checkAnswerButtonClicked}
+          selectedAnswers={selectedAnswers}
+          setSelectedAnswers={setSelectedAnswers}
         />
       ))}
       <CheckAnswer
