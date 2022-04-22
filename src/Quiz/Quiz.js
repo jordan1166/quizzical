@@ -84,7 +84,7 @@ export default function Quiz(props) {
               : "Loading.."
           }
           answers={
-            JSON.parse(localStorage.getItem(`result ${index}`)).length !== 0
+            JSON.parse(localStorage.getItem(`result ${index}`))
               ? JSON.parse(localStorage.getItem(`result ${index}`))
               : Array(4).fill("Loading..")
           }
