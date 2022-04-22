@@ -1,19 +1,26 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./Button.css";
 
 export default function Button(props) {
   let styles;
-  // style the button dynamically based on if isClicked equals true or false
+
   if (props.selectedCorrectAnswer) {
     console.log("Correct!");
   }
-  // if 'check answer' button is clicked, highlight selected answers in green
+
   if (props.checkAnswerButtonClicked) {
-    styles =
-      props.selected === props.text
-        ? { backgroundColor: "#94d7a2", border: "none" }
-        : { backgroundColor: "#ede6db", border: "1px solid #293264" };
+    // when 'check answer' button is clicked highlight correct answers in green
+    if (props.correctAnswer === props.text) {
+      styles = { backgroundColor: "#94d7a2", border: "none" };
+    } else {
+      // if answer is incorrect highlight answer in red
+      styles =
+        props.selected === props.text
+          ? { backgroundColor: "#f8bcbc", border: "none" }
+          : { backgroundColor: "#ede6db", border: "1px solid #293264" };
+    }
   } else {
+    // style the button dynamically based on if isClicked equals true or false
     // when an 'answer button' is clicked during the quiz, highlight that button in a blue-ish color
     styles = props.isClicked
       ? { backgroundColor: "#d6dbf5", border: "none" }

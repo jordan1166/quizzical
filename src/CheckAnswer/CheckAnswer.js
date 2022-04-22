@@ -7,7 +7,10 @@ export default function CheckAnswer(props) {
   function clicked() {
     return (
       <div className="check-anwser-container">
-        <p className="correct-answer-count">You scored 3/5 correct answers</p>
+        <p className="correct-answer-count">
+          You scored {Object.keys(props.correctSelectedAnswers).length}/5
+          correct answers
+        </p>
         <button className="check-answer-button" onClick={props.handleClick}>
           Play Again
         </button>

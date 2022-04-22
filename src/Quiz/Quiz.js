@@ -7,6 +7,8 @@ import { nanoid } from "nanoid";
 export default function Quiz(props) {
   // selectedAnswers keeps track of which answers are currently selected
   const [selectedAnswers, setSelectedAnswers] = useState({});
+  // correctSelectedAnswers keeps track of how many currently selected answers are correct
+  const [correctSelectedAnswers, setCorrectSelectedAnswers] = useState({});
   const [answers, setAnswers] = useState([]);
   const [checkAnswerButtonClicked, setCheckAnswerButtonClicked] =
     useState(false);
@@ -94,11 +96,14 @@ export default function Quiz(props) {
           checkAnswerButtonClicked={checkAnswerButtonClicked}
           selectedAnswers={selectedAnswers}
           setSelectedAnswers={setSelectedAnswers}
+          correctSelectedAnswers={correctSelectedAnswers}
+          setCorrectSelectedAnswers={setCorrectSelectedAnswers}
         />
       ))}
       <CheckAnswer
         checkAnswerButtonClicked={checkAnswerButtonClicked}
         handleClick={handleClick}
+        correctSelectedAnswers={correctSelectedAnswers}
       />
     </main>
   );

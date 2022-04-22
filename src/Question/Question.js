@@ -21,11 +21,32 @@ export default function Question(props) {
       })
     );
   }, [currentID]);
-
+  function correctAnswerCount(text) {
+    // the only questions and answers that are stored in the object are questions that have
+    // the correct answer selected
+    // if the selected answer is correct, add the question number and answer to
+    // correctSelectedAnswers object as a key/value pair
+    if (text === props.correctAnswer) {
+      props.correctSelectedAnswers[props.questionNumber] = props.correctAnswer;
+    } else {
+      // if currently selected answer is not correct but the current question
+      // is in the correctSelectedAnswers object, that means we originally selected
+      // the correct answer but are now selecting another answer that is wrong
+      // so delete the question/answer from the correctSelectedAnswers object
+      if (props.questionNumber in props.correctSelectedAnswers) {
+        props.setCorrectSelectedAnswers((prevState) => {
+          delete prevState[props.questionNumber];
+          return prevState;
+        });
+      }
+    }
+    console.log(props.correctSelectedAnswers);
+  }
   function answerButtonClicked(id, text) {
     // when button is clicked set current id equal to the button's id
     setCurrentID(id);
     console.log(text);
+    correctAnswerCount(text);
     // check if an answer to current question is in the selectedAnswers object
     if (props.questionNumber in props.selectedAnswers) {
       // if currently selected answer is already a value in the selectedAnswers object
@@ -114,6 +135,7 @@ export default function Question(props) {
             }
             selectedCorrectAnswer={selectedCorrectAnswer}
             checkAnswerButtonClicked={props.checkAnswerButtonClicked}
+            correctAnswer={props.correctAnswer}
           />
         ))}
       </section>
