@@ -72,7 +72,7 @@ export default function Question(props) {
       });
     }
     // when answer is selected, save answer to local storage
-    localStorage.setItem(`answer ${props.questionNumber}`, text);
+    sessionStorage.setItem(`answer ${props.questionNumber}`, text);
     setSelectedCorrectAnswer((prevState) => {
       return text === props.correctAnswer ? true : false;
     });

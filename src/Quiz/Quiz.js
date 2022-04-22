@@ -28,7 +28,7 @@ export default function Quiz(props) {
     setAnswers(
       Array(5)
         .fill()
-        .map((item, index) => localStorage.getItem(`answer ${index}`))
+        .map((item, index) => sessionStorage.getItem(`answer ${index}`))
     );
   }, [checkAnswerButtonClicked]);
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function Quiz(props) {
     // questions and answers are stored in local storage so the answers don't get
     // reshuffled when the 'check answer' button is clicked
     results.forEach((result, index) => {
-      localStorage.setItem(
+      sessionStorage.setItem(
         `result ${index}`,
         JSON.stringify(
           shuffleArray([...result.incorrect_answers, result.correct_answer])
@@ -84,8 +84,8 @@ export default function Quiz(props) {
               : "Loading.."
           }
           answers={
-            JSON.parse(localStorage.getItem(`result ${index}`))
-              ? JSON.parse(localStorage.getItem(`result ${index}`))
+            JSON.parse(sessionStorage.getItem(`result ${index}`)) !== null
+              ? JSON.parse(sessionStorage.getItem(`result ${index}`))
               : Array(4).fill("Loading..")
           }
           correctAnswer={
